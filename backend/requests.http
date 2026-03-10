@@ -1,0 +1,35 @@
+### Get all images
+GET http://localhost:3000/api/images
+
+### Get one image by ID (valid ID)
+GET http://localhost:3000/api/images/69a36b75607e5fe9961ae496
+
+### Get one image by ID (non-existent but valid ObjectId format)
+GET http://localhost:3000/api/images/69a36b75607e5fe9961ae4ff
+
+### Get one image by ID (invalid ObjectId format — triggers 404)
+GET http://localhost:3000/api/images/not-a-valid-id
+
+### Rename image (valid request)
+PATCH http://localhost:3000/api/images/69a36b75607e5fe9961ae496
+Content-Type: application/json
+
+{ "name": "A beautiful blue merle" }
+
+### Rename image — bad request (missing name field)
+PATCH http://localhost:3000/api/images/69a36b75607e5fe9961ae496
+Content-Type: application/json
+
+{ "title": "wrong field" }
+
+### Rename image — image not found (valid ObjectId but doesn't exist)
+PATCH http://localhost:3000/api/images/69a36b75607e5fe9961ae4ff
+Content-Type: application/json
+
+{ "name": "New name" }
+
+### Rename image — content too large (name exceeds 100 characters)
+PATCH http://localhost:3000/api/images/69a36b75607e5fe9961ae496
+Content-Type: application/json
+
+{ "name": "This name is intentionally made to be way too long so that it exceeds the one hundred character limit that has been set on the server" }
