@@ -1,0 +1,32 @@
+[
+  {
+    "_id": {"$oid": "69a36b75607e5fe9961ae496"},
+    "src": "https://upload.wikimedia.org/wikipedia/commons/3/33/Blue_merle_koolie_short_coat_heading_sheep.jpg",
+    "name": "Blue merle herding sheep",
+    "author": {"$oid": "69a36b84607e5fe9961ae49c"}
+  },
+  {
+    "_id": {"$oid": "69a36b75607e5fe9961ae497"},
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Huskiesatrest.jpg/2560px-Huskiesatrest.jpg",
+    "name": "Huskies",
+    "author": {"$oid": "69a36b84607e5fe9961ae49c"}
+  },
+  {
+    "_id": {"$oid": "69a36b75607e5fe9961ae498"},
+    "src": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Taka_Shiba.jpg",
+    "name": "Shiba",
+    "author": {"$oid": "69a36b84607e5fe9961ae49c"}
+  },
+  {
+    "_id": {"$oid": "69a36b75607e5fe9961ae499"},
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Felis_catus-cat_on_snow.jpg/2560px-Felis_catus-cat_on_snow.jpg",
+    "name": "Tabby cat",
+    "author": {"$oid": "69a36b84607e5fe9961ae49d"}
+  },
+  {
+    "_id": {"$oid": "69a36b75607e5fe9961ae49a"},
+    "src": "https://upload.wikimedia.org/wikipedia/commons/8/84/Male_and_female_chicken_sitting_together.jpg",
+    "name": "Chickens",
+    "author": {"$oid": "69a36b84607e5fe9961ae49e"}
+  }
+]
