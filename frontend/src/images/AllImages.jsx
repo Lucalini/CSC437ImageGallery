@@ -1,8 +1,8 @@
 import { ImageGrid } from "./ImageGrid.jsx";
 import { useImageFetch } from "./useImageFetch.js";
 
-export function AllImages() {
-    const { imageData, isLoading, error } = useImageFetch();
+export function AllImages({ authToken }) {
+    const { imageData, isLoading, error } = useImageFetch(authToken);
 
     if (isLoading) {
         return <p>Loading...</p>;
