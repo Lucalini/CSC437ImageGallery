@@ -60,4 +60,17 @@ export class ImageProvider {
         );
         return result.matchedCount;
     }
+
+    async createImage(src, name, authorUsername) {
+        const usersCollectionName = getEnvVar("USERS_COLLECTION_NAME");
+        const usersCollection = this.mongoClient.db().collection(usersCollectionName);
+        const user = await usersCollection.findOne({ username: authorUsername });
+
+        const result = await this.collection.insertOne({
+            src,
+            name,
+            author: user._id
+        });
+        return result.insertedId;
+    }
 }

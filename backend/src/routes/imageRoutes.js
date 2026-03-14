@@ -1,4 +1,5 @@
 import { ObjectId } from "mongodb";
+import { imageMiddlewareFactory, handleImageFileErrors } from "../imageUploadMiddleware.js";
 
 const MAX_NAME_LENGTH = 100;
 
@@ -7,6 +8,31 @@ function waitDuration(numMs) {
 }
 
 export function registerImageRoutes(app, imageProvider) {
+    app.post(
+        "/api/images",
+        imageMiddlewareFactory.single("image"),
+        handleImageFileErrors,
+        async (req, res) => {
+            if (!req.file || !req.body.name) {
+                return res.status(400).send({
+                    error: "Bad Request",
+                    message: "Missing image file or image name"
+                });
+            }
+
+            try {
+                const src = `/uploads/${req.file.filename}`;
+                const name = req.body.name;
+                const authorUsername = req.userInfo.username;
+                const id = await imageProvider.createImage(src, name, authorUsername);
+                res.status(201).json({ id });
+            } catch (error) {
+                console.error(error);
+                res.status(500).json({ error: "Failed to upload image" });
+            }
+        }
+    );
+
     app.get("/api/images", async (req, res) => {
         await waitDuration(1000);
         try {
@@ -69,13 +95,22 @@ export function registerImageRoutes(app, imageProvider) {
         }
 
         try {
-            const matchedCount = await imageProvider.updateImageName(id, name);
-            if (matchedCount === 0) {
+            const image = await imageProvider.getOneImage(id);
+            if (!image) {
                 return res.status(404).send({
                     error: "Not Found",
                     message: "Image does not exist"
                 });
             }
+
+            if (image.author.username !== req.userInfo.username) {
+                return res.status(403).send({
+                    error: "Forbidden",
+                    message: "This user does not own this image"
+                });
+            }
+
+            await imageProvider.updateImageName(id, name);
             res.status(204).send();
         } catch (error) {
             console.error(error);
